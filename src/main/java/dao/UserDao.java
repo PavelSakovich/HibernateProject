@@ -1,7 +1,7 @@
 package dao;
 
 import exception.MyTransactionException;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import models.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -12,7 +12,7 @@ import utils.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-@Log
+@Slf4j
 public class UserDao {
     private Transaction transaction;
 
@@ -22,7 +22,7 @@ public class UserDao {
             HibernateUtil.getSessionFactory();
             log.info("---Таблица создана---");
         } catch (HibernateException e) {
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -31,7 +31,7 @@ public class UserDao {
         try {
             return HibernateUtil.getSessionFactory().openSession().get(User.class, id);
         } catch (HibernateException e) {
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -44,7 +44,7 @@ public class UserDao {
             userList = query.list();
             return userList;
         } catch (HibernateException e) {
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -58,7 +58,7 @@ public class UserDao {
             log.info("---Пользователь добавлен---");
         } catch (HibernateException e) {
             transaction.rollback();
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -71,7 +71,7 @@ public class UserDao {
             log.info("---Пользователь обновлен---");
         } catch (HibernateException e) {
             transaction.rollback();
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -84,7 +84,7 @@ public class UserDao {
             log.info("---Пользователь удален---");
         } catch (HibernateException e) {
             transaction.rollback();
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -97,7 +97,7 @@ public class UserDao {
             log.info("---Пользователь удален---");
         } catch (HibernateException e) {
             transaction.rollback();
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -110,7 +110,7 @@ public class UserDao {
             log.info("---Все пользователи удалены---");
         } catch (HibernateException e) {
             transaction.rollback();
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -122,7 +122,7 @@ public class UserDao {
             log.info("---Список пользователей получен---");
             return query.list();
         } catch (HibernateException e) {
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
@@ -135,7 +135,7 @@ public class UserDao {
             log.info("---Пользователь c адресом удален---");
         } catch (HibernateException e) {
             transaction.rollback();
-            log.info("---Error---");
+            log.error("---Error---");
             throw new MyTransactionException("Транзакция не выполнена");
         }
     }
