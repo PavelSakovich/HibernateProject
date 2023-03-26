@@ -9,7 +9,7 @@ import lombok.Data;
 public class User {
     @Column(name = "id")
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -17,12 +17,4 @@ public class User {
     private String lastName;
     @Column(name = "age", nullable = false)
     private int age;
-
-    public User(String firstName, String lastName, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-    }
-    public User (){
-    }
 }
