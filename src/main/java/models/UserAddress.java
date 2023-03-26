@@ -16,7 +16,7 @@ public class UserAddress {
     private String street;
     @Column (name = "house", nullable = false)
     private int house;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "id")
     private User user;
 }

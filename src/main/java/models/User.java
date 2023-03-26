@@ -9,7 +9,7 @@ import lombok.Data;
 public class User {
     @Column(name = "id")
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private int id;
     @Column(name = "first_name", nullable = false)
     private String firstName;

@@ -13,6 +13,7 @@ import java.util.List;
 
 @Log
 public class UserDao {
+    private Transaction transaction;
 
     public void createTable() { //Создание таблицы пользователей и таблицы адресов пользователей
 
@@ -49,55 +50,60 @@ public class UserDao {
 
     public void addUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
             log.info("---Пользователь добавлен---");
         } catch (HibernateException e) {
+            transaction.commit();
             log.info("---Error---");
         }
     }
 
     public void updateUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+           transaction = session.beginTransaction();
             session.merge(user);
             transaction.commit();
             log.info("---Пользователь обновлен---");
         } catch (HibernateException e) {
+            transaction.commit();
             log.info("---Error---");
         }
     }
 
     public void deleteUserById(int id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+           transaction = session.beginTransaction();
             session.remove(session.get(User.class, id));
             transaction.commit();
             log.info("---Пользователь удален---");
         } catch (HibernateException e) {
+            transaction.commit();
             log.info("---Error---");
         }
     }
 
     public void deleteUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.remove(user);
             transaction.commit();
             log.info("---Пользователь удален---");
         } catch (HibernateException e) {
+            transaction.commit();
             log.info("---Error---");
         }
     }
 
     public void deleteAllUsers() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.createQuery("DELETE FROM User").executeUpdate();
             transaction.commit();
             log.info("---Все пользователи удалены---");
         } catch (HibernateException e) {
+            transaction.commit();
             log.info("---Error---");
         }
     }
@@ -115,11 +121,12 @@ public class UserDao {
     }
     public void deleteUserWithAddressById(int id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.remove(session.get(User.class, id));
             transaction.commit();
             log.info("---Пользователь c адресом удален---");
         } catch (HibernateException e) {
+            transaction.commit();
             log.info("---Error---");
         }
     }
