@@ -14,7 +14,8 @@ import java.util.List;
 @Log
 public class UserDao {
 
-    public void createTable() {
+    public void createTable() { //Создание таблицы пользователей и таблицы адресов пользователей
+
         try {
             HibernateUtil.getSessionFactory();
             log.info("---Таблица создана---");
@@ -33,13 +34,15 @@ public class UserDao {
     }
 
     public List<User> getAllUsers() {
+        List<User> userList = new ArrayList<>();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<User> query = session.createQuery("from User ", User.class);
             log.info("---Пользователь получен---");
-            return query.list();
+            userList = query.list();
+            return userList;
         } catch (HibernateException e) {
             log.info("---Error---");
-            return new ArrayList<>();
+            return userList;
         }
     }
 
@@ -76,6 +79,7 @@ public class UserDao {
             log.info("---Error---");
         }
     }
+
     public void deleteUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -90,14 +94,35 @@ public class UserDao {
     public void deleteAllUsers() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            Query<User> query = session.createQuery("FROM User", User.class);
-            for (User user : query.list()) {
-                session.remove(user);
-            }
+            session.createQuery("DELETE FROM User").executeUpdate();
             transaction.commit();
             log.info("---Все пользователи удалены---");
         } catch (HibernateException e) {
             log.info("---Error---");
         }
     }
+
+    public List<User> getUsersByNumberHouse(int house) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<User> query = session.createQuery("select user from UserAddress where house = :param", User.class);
+            query.setParameter("param", house);
+            log.info("---Список пользователей получен---");
+            return query.list();
+        } catch (HibernateException e) {
+            log.info("---Error---");
+            return new ArrayList<User>();
+        }
+    }
+    public void deleteUserWithAddressById(int id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.remove(session.get(User.class, id));
+            transaction.commit();
+            log.info("---Пользователь c адресом удален---");
+        } catch (HibernateException e) {
+            log.info("---Error---");
+        }
+    }
+
 }
+

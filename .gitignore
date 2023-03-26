@@ -4,7 +4,7 @@
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
+.idea
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
@@ -38,4 +38,6 @@ build/
 .DS_Store
 /.idea/
 /target/
+/.idea/
+/.idea/
 /.idea/

@@ -2,6 +2,7 @@ package utils;
 
 import lombok.extern.java.Log;
 import models.User;
+import models.UserAddress;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -15,6 +16,7 @@ public class HibernateUtil {
             try {
                 Configuration configuration = new Configuration().configure();
                 configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(UserAddress.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
                 log.info("---Подключение установлено---");

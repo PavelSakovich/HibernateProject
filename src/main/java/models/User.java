@@ -17,12 +17,7 @@ public class User {
     private String lastName;
     @Column(name = "age", nullable = false)
     private int age;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserAddress userAddress;
 
-    public User(String firstName, String lastName, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-    }
-    public User (){
-    }
 }
